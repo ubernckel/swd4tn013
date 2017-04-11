@@ -1,0 +1,311 @@
+
+
+
+
+
+
+/* Responsive Web Design - Grid-View */
+.col-1 {width: 8.33%;}
+.col-2 {width: 16.66%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}
+
+[class*="col-"] {
+    float: left;
+    padding: 15px;
+    border: 0px solid red;
+}
+
+.block {
+    background-color: #fff;
+    margin: 5px;
+    min-width: 300px;
+    max-width: 600px;
+    height: 300px;
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+
+/* Navigation */
+ul.topnav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a {
+  display: inline-block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+ul.topnav li a:hover {background-color: #555;}
+
+ul.topnav li.active a:hover {background-color: #01BAFB;}
+
+ul.topnav li.active {
+    background-color: #01BAFB;
+    float: right;
+}
+
+ul.topnav li.icon {display: none;}
+
+@media screen and (max-width:680px) {
+  ul.topnav li:not(:first-child) {display: none;}
+  ul.topnav li.icon, .active {
+    float: right;
+    display: inline-block;
+  }
+}
+
+@media screen and (max-width:680px) {
+  ul.topnav.responsive {position: relative;}
+  ul.topnav.responsive li.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  ul.topnav.responsive li.active {
+    position: absolute;
+    right: 45px;
+    top: 0;
+  }
+  ul.topnav.responsive li {
+    float: none;
+    display: inline;
+  }
+  ul.topnav.responsive li a {
+    display: block;
+    text-align: left;
+  }
+}
+
+
+
+/* responsive boxes */
+* {
+    box-sizing: border-box;
+}
+
+.squareblock {
+    float: left;
+    background-color: rgba(51, 51, 51, 0.85);
+    border: 0px solid black;
+    margin: 15px;
+    padding: 15px;
+    height: auto;
+    -moz-box-shadow: 0 0 20px black;
+    -webkit-box-shadow: 0 0 20px black;
+    box-shadow: 0 0 20px black;
+    
+    /*min-width: fit-content;*/
+    max-width: 30%;
+    min-width: 330px;
+}
+
+#consquare {
+    /*min-width: 330px;*/
+}
+
+#xp {
+    /*min-width: 330px;*/
+}
+
+#knowhow{
+    /*min-width: 395px;*/
+}
+
+#projects, #langskills {
+    /*max-width: 38.2%;*/
+    /*min-width: auto;*/
+}
+
+#skills {
+    /*max-width: 50%;*/
+    min-width: 360px;
+}
+
+.page-wrap {
+    max-width: 1440px; 
+    height: 100%;
+    margin: 0 auto;
+    /*
+    padding: 10px 
+    background: white; 
+    -moz-box-shadow: 0 0 20px black; 
+    -webkit-box-shadow: 0 0 20px black; 
+    box-shadow: 0 0 20px black;*/
+    border: 0px solid yellow;
+    padding: 0px;
+}
+
+
+
+
+
+/* html structures */
+
+html {
+	height: 100%;
+}
+
+
+h1, h2, h3 {
+	color: #f2f2f2;
+	text-shadow: 1px 1px 0 #000;
+}
+
+b { 
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #000;
+}
+
+a {
+    text-decoration: none;
+    color: #01BAFB;
+}
+
+#bolder {
+    font-size: 120%;
+}
+
+q {
+    font-style: italic;
+}
+
+#undernavi {
+    background: #333;
+}
+
+#pagetitle {
+	/* For browsers that do not support gradients */
+    background: #333;
+	
+	/* For Safari 5.1 to 6.0 */
+    background: -webkit-linear-gradient(#333, rgba(255, 255, 255, 0));
+	
+	/* For Opera 11.1 to 12.0 */
+    background: -o-linear-gradient(#333, rgba(255, 255, 255, 0)); 
+	
+	/* For Firefox 3.6 to 15 */
+    background: -moz-linear-gradient(#333, #fff);
+	
+	/* Standard syntax */
+    background: linear-gradient(#333, rgba(255, 255, 255, 0)); 
+	
+	/* IE 5.5 - 7 */
+	filter: progid:DXImageTransform.Microsoft.gradient(gradientType=1, startColor=333333, endColorStr=#FFFFFF);
+	
+	/* IE8 uses -ms-filter for whatever reason... */
+	-ms-filter: progid:DXImageTransform.Microsoft.gradient(gradientType=1, startColor=333333, endColoStr=#FFFFFF);
+}
+
+#horinaa {
+    text-align: center;
+    padding: 0px;
+    color: rgba(51, 51, 51, 0.85);
+    text-shadow: 1px 1px 0 #fff;
+}
+
+
+
+
+/* Contact info table */
+.contable {
+    display: table;
+	width: 100%;
+    overflow-x: auto;
+    border: 0px solid green;
+    /*padding-bottom: 15px;*/
+    margin-bottom: 15px;
+}
+
+.concol1 {
+    display: table-column;
+    width: fit-content;
+    border: 0px solid green;
+}
+
+.concol2 {
+    display: table-column;
+    width:  fill-available;
+    border: 0px solid green;
+}
+
+.conrow {
+    display: table-row;
+    border: 0px solid green;
+}  
+
+.concell {
+    display: table-cell;
+    border: 0px solid green;
+	padding: 3px 10px;
+}
+
+.slogan {
+    background-color: rgba(1, 186, 251, 0.8);
+    color: #f2f2f2;
+    max-width: 300px;
+    text-align: center;
+}
+img.slogan {
+    width: 100%;
+    padding: 0;
+}
+.slogan :not(img){
+    padding: 15px;
+}
+
+
+
+
+ul.intext {
+    list-style-type: square;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Debug styles (remove before exporting for production)
+/* ---------------------------------------------- */
+
+.debug {
+    border: 1px solid #f00;
+}
+
+
+

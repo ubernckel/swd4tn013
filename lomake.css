@@ -1,0 +1,73 @@
+/* Embed font Exo-2 */
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display');
+
+
+
+.error {color: #FF0000;}
+
+body {
+    font-family: 'Playfair Display', serif;
+    color: #FFFFFF;
+    margin: 0;
+	height: 100%;
+    /*background: url('vault.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;*/
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+	background-color: #000000;
+}
+
+#center {
+	text-align: center;
+}
+
+img.titleimg {
+	width: 67%;
+	padding: 1px;
+	border: 1px solid #fff;
+	
+}
+
+
+
+
+/* Contact info table */
+.divtable {
+    display: table;
+	width: 100%;
+    overflow-x: auto;
+    border: 0px solid green;
+    /*padding-bottom: 15px;*/
+    margin-bottom: 15px;
+}
+
+.divcol1 {
+    display: table-column;
+    /*width: fit-content;*/
+    border: 0px solid green;
+}
+
+.divcol2 {
+    display: table-column;
+    /*width:  fill-available;*/
+    border: 0px solid green;
+}
+
+.divrow {
+    display: table-row;
+    border: 0px solid green;
+}  
+
+.divcell {
+    display: table-cell;
+    border: 0px solid green;
+	padding: 3px 10px;
+}
+
+
+
+
+
+
+
