@@ -1,0 +1,67 @@
+/* Embed font Muli */
+@import url('https://fonts.googleapis.com/css?family=Muli');
+
+body {
+    font-family: 'Muli', sans-serif;
+    color: #fff;
+    margin: 10px;
+	height: 100%;
+	background-color: #000;
+}
+
+table.navi tr.navi {
+	width: 100%;
+	border: 0;
+	text-align: center;
+}
+
+a:link.navi {
+    text-decoration: none;
+	color: #fff;
+}
+
+a:visited.navi {
+    text-decoration: none;
+	color: #f0f0f0;
+}
+
+a:hover.navi {
+    text-decoration: none;
+	color: #4CFF00;
+}
+
+a:active.navi {
+    text-decoration: none;
+}
+
+table {
+	text-align: left;
+	width: auto;
+	max-width: 1000px;
+	border: 0;
+	//border: 1px solid red;
+}
+
+td {
+	vertical-align: top;
+	width: auto;
+	padding: 3px;
+}
+
+i {
+	font-style: italic;
+	color: #4CFF00;
+}
+
+input {
+    width: 100%;
+}
+
+textarea {
+	white-space: wrap;
+	width: 100%;
+}
+
+.error {
+	color: #FF0000;
+}
