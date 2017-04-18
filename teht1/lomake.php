@@ -11,10 +11,10 @@ if (isset($_POST["tallenna"])){
 	$sukunimiVirhe = $rekisteri->checkSuku();
 	$hetuVirhe = $rekisteri->checkHetu();
 	$emailVirhe = $rekisteri->checkSposti();
-	//$osoiteVirhe = $rekisteri->checkOsoite();
-	//$postinroVirhe = $rekisteri->checkPostinro();
+	$osoiteVirhe = $rekisteri->checkOsoite();
+	$postinroVirhe = $rekisteri->checkPostinro();
 	// Lisätietoja kenttä vapaaehtoinen, kerrotaan tarkistusfunktiolle false
-	//$infoVirhe = $rekisteri->checkInfo(false);
+	$infoVirhe = $rekisteri->checkInfo(false);
 }
 
 // Onko painettu Palaa tallentamatta -namiskuukkelia
@@ -32,8 +32,9 @@ else {
 	$sukunimiVirhe = 0;
 	$hetuVirhe = 0;
 	$emailVirhe = 0;
-	//$osoiteVirhe = 0;
-	//$infoVirhe = 0;
+	$osoiteVirhe = 0;
+	$postinroVirhe = 0;
+	$infoVirhe = 0;
 }
 
 
@@ -58,7 +59,7 @@ require_once "navi.php";
   <h1>Jäsenlomake</h1>
   <h2>Kuvitteellinen ry jäseneksi rekisteröitymislomake</h2>
   <p>
-   Täytä kaikki kentät ja lähetä tiedot jäsenrekisteriin. Tietoja käsitellään vastuuttomasti, tietoturvasta piittaamatta ja iltapäivälehtien juorupalstoille vuotaen.
+   Täytä kaikki kentät ja lähetä tiedot jäsenrekisteriin. Tietoja käsitellään vastuuttomasti, tietoturvasta piittaamatta ja iltapäivälehtien juorupalstoille vuotaen. Koska haluamme kerätä jäsenistämme tarpeettoman paljon henkilötietoja, jätimme vain lisätietokentän valinnaiseksi.
   </p>
   
   
@@ -129,8 +130,12 @@ require_once "navi.php";
 		  Osoite
 		 </td>
 		 <td>
-		  <input type="text" name="osoite" value="">
+		  <input type="text" name="osoite" value="<?php print(htmlentities($rekisteri->getOsoite(), ENT_QUOTES, "UTF-8")); ?>">
 		 </td>
+		 <td>
+		  <?php
+			print ("<span class='error'>" . $rekisteri->getError ( $osoiteVirhe ) . "</span>") ;
+		  ?> 
 		 </td>
 	</tr>
 	<tr>
@@ -138,10 +143,15 @@ require_once "navi.php";
 		  Postinumero<br>
 		 </td>
 		 <td>
-		  <input type="text" name="postinro" value="">
+		  <input type="text" name="postinro" value="<?php print(htmlentities($rekisteri->getPostinro(), ENT_QUOTES, "UTF-8")); ?>">
 		 </td>
 		 <td>
-		  <i>(vain numeroita)</i>
+		  <i>
+			(vain numeroita)
+			<?php
+			print ("<span class='error'>" . $rekisteri->getError ( $postinroVirhe ) . "</span>") ;
+			?> 
+		  </i>
 		 </td>
 	</tr>
 	<tr>
@@ -149,7 +159,17 @@ require_once "navi.php";
 		  Lisätietoja
 		 </td>
 		 <td>
-		  <textarea rows="5" name="info"></textarea>
+		  <textarea rows="5" name="info">
+			<?php print(htmlentities($rekisteri->getInfo(), ENT_QUOTES, "UTF-8"));?>
+		  </textarea>
+		 </td>
+		 <td>
+		  <i>
+			(valinnainen)
+			<?php
+			print ("<span class='error'>" . $rekisteri->getError ( $infoVirhe ) . "</span>") ;
+			?> 
+		  </i>
 		 </td>
 	</tr>
 	<tr>
@@ -164,7 +184,7 @@ require_once "navi.php";
 	</tr>
    </table>
   </form>
-
+<br>
 
   
   <p>
@@ -172,19 +192,7 @@ require_once "navi.php";
   <br>
   
   	<?php
-		if($etunimiVirhe !=0) {
-			print( $rekisteri->getError($etunimiVirhe) . "<br>");
-		};
-		if($sukunimiVirhe !=0) {
-			print( $rekisteri->getError($sukunimiVirhe) . "<br>");
-		};
-		if($hetuVirhe !=0) {
-			print( $rekisteri->getError($hetuVirhe) . "<br>");
-		};
-
-		
 	print_r($rekisteri);
-
 	?>
 	
   </p>

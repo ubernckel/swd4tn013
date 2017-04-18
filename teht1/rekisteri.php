@@ -2,7 +2,7 @@
 class rekisteri {
 	// Taulukko virhekoodeja varten, sekä niitä vastaavat tekstit
 	private static $virhekoodit = array(
-		-1 => "Virheellinen tieto <br>",
+		-1 => "Virheellinen tieto",
 		0 => "", // ei virhekoodi, vaan kaikki kunnossa koodi
 		11 => "Etunimi on syötettävä",
 		12 => "Etunimi on liian lyhyt",
@@ -10,19 +10,23 @@ class rekisteri {
 		21 => "Sukunimi on syötettävä",
 		22 => "Sukunimi on liian lyhyt",
 		23 => "Sukunimi on liian pitkä",
-			24 => "Nimessä voi olla vain kirjaimia ja -",
 		31 => "Henkilötunnus on pakollinen",
 		32 => "Henkilötunnuksen tarkistusmerkki ei täsmää",
 		33 => "Henkilötunnuksen päivämäärä ei kelpaa",
 		34 => "Henkilötunnuksen pitää olla muotoa PPKKVV[+-A]NNNX",
 		41 => "Sähköposti on pakollinen",
 		42 => "Epäkelpo sähköpostiosoite",
-			43 => "Minuutit välillä 0-59",
-			44 => "Kesto on liian lyhyt",
-			51 => "kuvaus on pakollinen",
-			52 => "Kuvaus on liian lyhyt",
-			53 => "Kuvaus on liian pitkä",
-			54 => "Kuvaus saa olla vain kirjaimia, numeroita ja - ,.!?" 
+		51 => "Osoite on pakollinen",
+		52 => "Osoite on liian lyhyt",
+		53 => "Osoitteen maksimipituus 100 merkkiä",
+		54 => "Osoitteessa ei saa olla kuin kirjaimia, numeroita ja ,.- ",
+		61 => "Postinumero puuttuu",
+		62 => "Suomalainen postinumero on 5 merkkiä pitkä",
+		63 => "Syötä 5 numeroa",
+		71 => "Lisätiedot ovat pakollisia",
+		72 => "Jos kerran alat kirjottamaan niin kirjoita vähintään 10 merkkiä",
+		73 => "Älä nyt innostu! Merkkejä max 4000",
+		74 => "Lisätiedoissa saa olla vain kirjaimia, numeroita ja - ,.!?" 
 	);
 	
 	// Attribuutit
@@ -40,7 +44,7 @@ class rekisteri {
 		$this->id = trim($id);
 		$this->etunimi = trim($etu);
 		$this->sukunimi = trim($suku);
-		$this->hetu = $hetu;
+		$this->hetu = trim($hetu);
 		$this->email = trim($sposti);
 		$this->osoite = trim($osoite);
 		$this->postinro = trim($postinro);
@@ -83,7 +87,29 @@ class rekisteri {
 		return $this->email;
 	}
 	
+	public function setOsoite($osoite) {
+		$this->osoite = trim($osoite);
+	}
+	public function getOsoite() {
+		return $this->osoite;
+	}
 	
+	public function setPostinro($postinro) {
+		$this->osoite = trim($postinro);
+	}
+	public function getPostinro() {
+		return $this->postinro;
+	}
+
+	public function setInfo($info) {
+		$this->info = trim($info);
+	}
+	public function getInfo() {
+		return $this->info;
+	}
+
+
+
 	// Käsitellään etunimi, $required määrittää, onko kenttä vaadittu
 	public function checkEtu( $required=true, $min=2, $max=50) {
 		
@@ -155,8 +181,6 @@ class rekisteri {
 		if ($required == true && strlen ( $this->hetu ) == 0) {
 			return 31;
 		}
-		return 0;
-		
 		
 		// Määritellään hetukuvio ja annetaan ehdotussyöte
 		$kuvio = '/(^[0-2][0-9]|3[0-1])(0[0-9]|1[0-2])([0-9][0-9])([+A-])([[:digit:]]{3})([A-Z]|[[:digit:]])/';
@@ -179,7 +203,7 @@ class rekisteri {
 			} elseif ($tulos[4]=='A') {
 				$vuosisata='20';
 			} else {
-				error_log("Vuosisataa ei saatu kiinni " . $vuosisata . print_r($tulos[4]), 0);
+				error_log("Vuosisataa ei saatu kiinni " . $vuosisata, 0);
 			}
 			
 			$vuosi=$vuosisata.$tulos[3];
@@ -202,7 +226,6 @@ class rekisteri {
 				// Verrataan hetun syötteen viimeistä nroa tarkistussummaan,
 				// jos täsmää, hetu on ok
 				if ($tulos[6]==$tarkistus) {
-					error_log("Regex: " . print_r($tulos[6]), 0);
 					return 0;
 				}
 
@@ -237,16 +260,123 @@ class rekisteri {
 		}
 		
 		// Tutkitaan onko sähköposti oikean muotoinen
-		//if (!filter_var($sposti, FILTER_VALIDATE_EMAIL)) {
-		//	return 42;
-		//}
+		$eemeli = $this->email;
+		if (!filter_var($eemeli, FILTER_VALIDATE_EMAIL)) {
+			return 42;
+		}
 		
 		// Sähköpostistin tarkistukset läpäisty
 		return 0;
+	}
 
+
+
+
+	
+
+	// Käsitellään osoite, $required määrittää, onko kenttä vaadittu
+	public function checkOsoite( $required=true, $min=3, $max=100 ) {
+		
+		// Jos osoite ei ole vaadittu, ja on tyhjä, palautetaan kaikki ok
+		if ($required == false && strlen ( $this->osoite ) == 0) {
+			return 0;
+		}
+			
+		// Jos osoite on vaadittu, mutta se on tyhjä, palautetaan puuttuva osoite
+		if ($required == true && strlen ( $this->osoite ) == 0) {
+			return 51;
+		}
+		
+		// Jos osoite liian lyhyt
+		if(strlen($this->osoite) < $min) {
+			return 52; 	
+		}
+		
+		// Jos osoite on liian pitkä
+		if(strlen($this->osoite) > $max){
+			return 53;
+		}
+		
+		// Tarkistetaan ettei osoitteessa ole erikoismerkkejä
+		// Toisin sanoen, osoitteessa saa olla vain kirjaimia, numeroita ja - ,.
+		if (preg_match ( "/^[a-zöåä0-9,.\-\ ]$/i", $this->osoite )) {
+			return 54;
+		} 
+	
+		// Osoitetarkistukset tehty
+		return 0;
+	}
+
+	
+	
+	
+	
+	// Käsitellään postinro, $required määrittää, onko kenttä vaadittu
+	public function checkPostinro( $required=true, $len=5 ) {
+		
+		// Jos postinumero ei ole vaadittu, ja on tyhjä, palautetaan kaikki ok
+		if ($required == false && strlen ( $this->postinro ) == 0) {
+			return 0;
+		}
+			
+		// Jos postinumero on vaadittu, mutta se on tyhjä, palautetaan puuttuva postinumero
+		if ($required == true && strlen ( $this->postinro ) == 0) {
+			return 61;
+		}
+		
+		// Jos postinumerossa väärä määrä numeroita
+		if(strlen($this->postinro) != $len) {
+			return 62; 	
+		}
+	
+		// Onko 5 numeroa
+		if (! preg_match ( "/^\d{5}$/", $this->postinro )) {
+			return 63;
+		}
+	
+		// Postinumerotarkistukset tehty
+		return 0;
 	}
 	
+
+	
+	
+	
+	// Käsitellään vielä lisätiedot
+	public function checkInfo($required = true, $min = 10, $max = 4000) {
+		// Jos saa olla tyhjä ja on tyhjä
+		if ($required == false && strlen ( $this->info ) == 0) {
+			return 0;
+		}
+			
+		// Jos ei saa olla tyhjä ja on tyhjä
+		if ($required == true && strlen ( $this->info ) == 0) {
+			return 71;
+		}
+			
+		// Jos kommentti on liian lyhyt
+		if (strlen ( $this->info ) < $min) {
+			return 72;
+		}
+			
+		// Jos kommentti on liian pitkä
+		if (strlen ( $this->info ) > $max) {
+			return 73;
+		}
+			
+		// Lisätietotarkistus
+		if (preg_match ( "/^[a-zöåä0-9\-.,!?]$/i", $this->info )) {
+			return 74;
+		}
 		
+		// Muussa tapauksessa ok
+		return 0;
+	}
+	
+	
+	
+	
+	
 	
 	
 	
