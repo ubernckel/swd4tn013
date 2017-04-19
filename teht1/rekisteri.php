@@ -299,7 +299,7 @@ class rekisteri {
 		
 		// Tarkistetaan ettei osoitteessa ole erikoismerkkejä
 		// Toisin sanoen, osoitteessa saa olla vain kirjaimia, numeroita ja - ,.
-		if (preg_match ( "/^[a-zöåä0-9,.\-\ ]$/i", $this->osoite )) {
+		if (!preg_match ( "/^[a-zöåä0-9,.\-\ ]*$/i", $this->osoite )) {
 			return 54;
 		} 
 	
@@ -365,7 +365,7 @@ class rekisteri {
 		}
 			
 		// Lisätietotarkistus
-		if (preg_match ( "/^[a-zöåä0-9\-.,!?]$/i", $this->info )) {
+		if (!preg_match ( "/^[a-zöåä0-9\-.,!?]*$/i", $this->info )) {
 			return 74;
 		}
 		
