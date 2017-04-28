@@ -1,41 +1,83 @@
 <?php
 require_once "rekisteri.php";	// hae tarkistuskoodi
 
+// Aloitetaan sessio ja asetetaan sitkeä eväste, jonka elinikä on 1vrk/24h
+session_start([
+    'cookie_lifetime' => 600,			//Istunnon elinikä sekunteina
+	
+	// Hifistelyä
+	//'session.cookie_secure' => false,		//vain omaan WAMPiin, Protolla ei ole SSL:ää
+	//'session.cookie_httponly' => true,	//Ei luovuteta evästeitä Javascriptille
+]);
 
 //Onko painettu Tallenna -namiskuukkelia
 if (isset($_POST["tallenna"])){
+	
+	//Luodaan olio luokasta Rekisteri
 	$rekisteri = new Rekisteri($_POST["id"], $_POST["etunimi"], $_POST["sukunimi"], $_POST["hetu"], $_POST["email"], $_POST["osoite"], $_POST["postinro"], $_POST["info"]);
-		
-	// Tarkistetaan kentät
+	
+	//Lyntätään olio sessioon ja suljetaan sessio
+	$_SESSION["rekisterointi"] = $rekisteri;
+	session_write_close();
+	
+	
+	// Tehdään syötteentarkistus
 	$etunimiVirhe = $rekisteri->checkEtu();
 	$sukunimiVirhe = $rekisteri->checkSuku();
-	$hetuVirhe = $rekisteri->checkHetu();
+	$hetuVirhe = $rekisteri->checkHetu(false);
 	$emailVirhe = $rekisteri->checkSposti();
 	$osoiteVirhe = $rekisteri->checkOsoite();
 	$postinroVirhe = $rekisteri->checkPostinro();
 	// Lisätietoja kenttä vapaaehtoinen, kerrotaan tarkistusfunktiolle false
 	$infoVirhe = $rekisteri->checkInfo(false);
+
+	// Tarkitetaan ettei mistään tullut herjaa
+	if ($etunimiVirhe == 0 &&
+		$sukunimiVirhe == 0 &&
+		$hetuVirhe == 0 &&
+		$emailVirhe == 0 &&
+		$osoiteVirhe == 0 &&
+		$postinroVirhe == 0 &&
+		$infoVirhe == 0) {
+			header("location: naytaLomake.php");
+			exit;
+	}
+	
+
 }
 
 // Onko painettu Palaa tallentamatta -namiskuukkelia
 elseif(isset($_POST["peruuta"])) {
+	
+	// Ppoistetaan Rekisteri-luokan olio sessiosta
+	unset($_SESSION["rekisterointi"]);
+	
+	//ja siirrytään aloitussivulle
 	header("location: index.php");
 	exit();
 }
 
 // Sivulle tultiin muualta, oletettavasti ilman POST-kuormaa...
 else {
-	$rekisteri = new Rekisteri();
 	
-	// ... ja voidaan alustaa virhemuuttujat
-	$etunimiVirhe = 0;
-	$sukunimiVirhe = 0;
-	$hetuVirhe = 0;
-	$emailVirhe = 0;
-	$osoiteVirhe = 0;
-	$postinroVirhe = 0;
-	$infoVirhe = 0;
+	//...paitsi jos sulla on sessio olemassa!
+	 if (isset($_SESSION["rekisteröinti"])) {
+		 $leffa = $_SESSION["rekisteröinti"];
+	 } else {
+		 // Jos ei ole niin session cookieta, niin tehdään ihan uusi olio
+		$rekisteri = new Rekisteri();
+		
+		// ... ja voidaan alustaa virhemuuttujat
+		$etunimiVirhe = 0;
+		$sukunimiVirhe = 0;
+		$hetuVirhe = 0;
+		$emailVirhe = 0;
+		$osoiteVirhe = 0;
+		$postinroVirhe = 0;
+		$infoVirhe = 0;
+	 }
 }
+
 
 
 ?>
@@ -186,16 +228,7 @@ require_once "navi.php";
   </form>
 <br>
 
-  
-  <p>
-  <b>Debuggi:</b>
-  <br>
-  
-  	<?php
-	print_r($rekisteri);
-	?>
-	
-  </p>
+
 
 
 </body>
