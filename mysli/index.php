@@ -30,6 +30,7 @@ Müesli
 		$oCon = new PDO('mysql:host='.$mHost.';dbname='.$mDb, $mUser, $mPass);
 		// set the PDO error mode to exception
 		$oCon->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$oCon->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
 		echo "MySQL PDO Connected successfully"; 
 		}
@@ -40,6 +41,20 @@ Müesli
 		}
 	
 	$oCon = null;
+
+	// Select something
+	$sql = "SELECT * FROM user_info";
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+
+	while ($row = $stmt->fetchObject()) {
+		print("<p>Käyttäjä: " . utf8_encode($row->kommentti));
+
+	}
+	print("<br> Yhteensä " . $stmt->rowCount() . " käyttäjää"); 
+
+	
+	
 
 
 
