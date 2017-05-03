@@ -40,7 +40,7 @@ Müesli
 		echo "MySQL PDO Connection failed: " . $e->getMessage();
 		}
 	
-	$oCon = null;
+	
 
 	// Select something
 	$sql = "SELECT * FROM user_info";
@@ -54,8 +54,8 @@ Müesli
 	print("<br> Yhteensä " . $stmt->rowCount() . " käyttäjää"); 
 
 	
-	
-
+	// Katkaise yhteys
+	$oCon = null;
 
 
 ?>
