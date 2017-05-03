@@ -1,3 +1,9 @@
+<?php
+# Configuration
+require_once 'config.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="fi">
 <head>
@@ -18,21 +24,22 @@ Müesli
 <h1>Müesli</h1>
 
 <?php
-print('moe');
+	// Create MySQL PDO connection
 
-$db=new PDO("mysql:host=localhost;dbname=a1602804","a1602804","viKEUE76y");
-$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-$sql = "SELECT * FROM user_info";
-$stmt = $db->prepare($sql);
-$stmt->execute();
+	try {
+		$oCon = new PDO('mysql:host='.$mHost.';dbname='.$mDb, $mUser, $mPass);
+		// set the PDO error mode to exception
+		$oCon->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-while ($row = $stmt->fetchObject()) {
-	print("<p>Kommentti: " . utf8_encode(row->kommentti));
-}
+		echo "MySQL PDO Connected successfully"; 
+		}
 
-print("<br> Yhteensä " . $stmt->rowCount() . " kommenttia"); 
-
+	catch(PDOException $e)
+		{
+		echo "MySQL PDO Connection failed: " . $e->getMessage();
+		}
+	
+	$oCon = null;
 
 
 
