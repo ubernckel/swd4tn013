@@ -20,6 +20,21 @@ Müesli
 <?php
 print('moe');
 
+$db=new PDO("mysql:host=localhost;dbname=a1602804","a1602804","viKEUE76y");
+$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+$sql = "SELECT * FROM user_info";
+$stmt = $db->prepare($sql);
+$stmt->execute();
+
+while ($row = $stmt->fetchObject()) {
+	print("<p>Kommentti: " . utf8_encode(row->kommentti));
+}
+
+print("<br> Yhteensä " . $stmt->rowCount() . " kommenttia"); 
+
+
+
 
 ?>
 
