@@ -48,7 +48,7 @@ Müesli
 	$stmt->execute();
 
 	while ($row = $stmt->fetchObject()) {
-		print("<p>Käyttäjä: " . utf8_encode($row->kommentti));
+		print("<p>Käyttäjä: " . utf8_encode($row->username));
 
 	}
 	print("<br> Yhteensä " . $stmt->rowCount() . " käyttäjää"); 
