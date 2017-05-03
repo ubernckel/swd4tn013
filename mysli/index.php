@@ -55,7 +55,7 @@ Müesli
 
 	
 	// Katkaise yhteys
-	$oCon = null;
+	//$oCon = null;
 
 
 ?>
