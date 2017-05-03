@@ -43,7 +43,7 @@ Müesli
 	
 
 	// Select something
-	$sql = "SELECT * FROM user_info";
+	$sql = "SELECT username FROM user_info";
 	$stmt = $oCon->prepare($sql);
 	$stmt->execute();
 
