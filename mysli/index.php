@@ -44,7 +44,7 @@ Müesli
 
 	// Select something
 	$sql = "SELECT * FROM user_info";
-	$stmt = $db->prepare($sql);
+	$stmt = $oCon->prepare($sql);
 	$stmt->execute();
 
 	while ($row = $stmt->fetchObject()) {
