@@ -49,7 +49,7 @@ if (isset($_POST["tallenna"])){
 // Onko painettu Palaa tallentamatta -namiskuukkelia
 elseif(isset($_POST["peruuta"])) {
 	
-	// Ppoistetaan Rekisteri-luokan olio sessiosta
+	// Poistetaan Rekisteri-luokan olio sessiosta
 	unset($_SESSION["rekisterointi"]);
 	
 	//ja siirrytään aloitussivulle

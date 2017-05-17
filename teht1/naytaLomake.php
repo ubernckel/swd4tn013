@@ -14,7 +14,7 @@ if (isset ( $_SESSION ["rekisterointi"] )) {
 }
 
 // Poistetaan luokan olio sessiosta
-//unset($_SESSION["rekisteröinti"]);
+unset($_SESSION["rekisteröinti"]);
 
 
 ?>
@@ -54,7 +54,7 @@ require_once "navi.php";
 		print ("<br >Lisätieto: -</p>") ;
 	?>
 
-	<form action="uusiJasen.php" method="post">
+	<form action="lomake.php" method="post">
 		<p>
 			<input type="submit" name="korjaa" value="Korjaa">
 			<input type="submit" name="talleta" value="Talleta">
